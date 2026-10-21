@@ -1,0 +1,141 @@
+/* ---------------------------------------------
+   Feuille de style commune à toutes les pages
+   À placer dans : assets/style.css
+   --------------------------------------------- */
+
+:root {
+  --texte: #1f2328;
+  --texte-doux: #656d76;
+  --fond: #ffffff;
+  --bordure: #d8dee4;
+  --accent: #0969da;
+  --accent-fond: #f6f8fa;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+  max-width: 720px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--texte);
+  background: var(--fond);
+}
+
+/* --- En-tête --- */
+
+.site-header {
+  padding-bottom: 1.5rem;
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid var(--bordure);
+}
+
+.site-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  margin: 0.25rem 0 0;
+  color: var(--texte-doux);
+}
+
+/* --- Sections --- */
+
+section {
+  margin-bottom: 2.5rem;
+}
+
+h2 {
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--texte-doux);
+  margin-bottom: 1rem;
+}
+
+/* --- Liste de liens --- */
+
+.liste-liens {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.liste-liens li {
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--bordure);
+  border-radius: 6px;
+  margin-bottom: 0.6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.liste-liens li:hover {
+  background: var(--accent-fond);
+}
+
+.liste-liens a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.liste-liens a:hover {
+  text-decoration: underline;
+}
+
+.note {
+  font-size: 0.85rem;
+  color: var(--texte-doux);
+}
+
+.vide {
+  color: var(--texte-doux);
+  font-style: italic;
+}
+
+/* --- Lien de retour sur les fiches --- */
+
+.retour {
+  display: inline-block;
+  margin-bottom: 2rem;
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.retour:hover {
+  text-decoration: underline;
+}
+
+/* --- Pied de page --- */
+
+footer {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--bordure);
+  font-size: 0.85rem;
+  color: var(--texte-doux);
+}
+
+/* --- Mode sombre automatique --- */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --texte: #e6edf3;
+    --texte-doux: #8b949e;
+    --fond: #0d1117;
+    --bordure: #30363d;
+    --accent: #4493f8;
+    --accent-fond: #161b22;
+  }
+}
