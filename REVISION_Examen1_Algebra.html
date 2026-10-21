@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Révision Examen 1 — Álgebra</title>
+<style>
+:root{
+  --bg:#f7f6f2; --paper:#ffffff; --ink:#1d2330; --muted:#5d6577; --line:#e3e1da;
+  --a:#2f6fdb; --a-soft:#e8f0fd;     /* Partie A maths */
+  --b:#7b4fd6; --b-soft:#f1ebfd;     /* Partie B Wolfram */
+  --c:#0f9b77; --c-soft:#e4f6f0;     /* Partie C méthode */
+  --d:#d4453b; --d-soft:#fdeceb;     /* Partie D erreurs */
+  --e:#c7861a; --e-soft:#fbf2e1;     /* Partie E glossaire */
+  --f:#2a8fb0; --f-soft:#e3f3f8;     /* Partie F auto-test */
+  --code-bg:#1f2430; --code-ink:#e6e8ee;
+  --accent:var(--a); --accent-soft:var(--a-soft);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.6 "Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;}
+code,pre,kbd{font-family:"Cascadia Code",Consolas,"SFMono-Regular",Menlo,monospace}
+
+/* ---------- layout ---------- */
+.layout{display:grid;grid-template-columns:270px 1fr;max-width:1280px;margin:0 auto}
+nav.toc{position:sticky;top:0;height:100vh;overflow:auto;padding:28px 18px 28px 22px;border-right:1px solid var(--line)}
+nav.toc .brand{font-weight:800;font-size:15px;letter-spacing:.02em;margin-bottom:4px}
+nav.toc .date{font-size:12.5px;color:var(--muted);margin-bottom:18px}
+nav.toc a{display:block;color:var(--ink);text-decoration:none;font-size:13.5px;padding:3px 8px;border-radius:6px}
+nav.toc a:hover{background:#ebe9e2}
+nav.toc .part{margin-top:12px;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.06em;padding:4px 8px;border-left:3px solid var(--p);color:var(--p)}
+nav.toc .sub{padding-left:18px;color:var(--muted)}
+main{padding:36px 48px 80px;min-width:0}
+
+/* ---------- hero ---------- */
+.hero{background:linear-gradient(135deg,#1f2a44,#2f4f8f);color:#fff;border-radius:18px;padding:34px 36px;margin-bottom:28px}
+.hero .kicker{text-transform:uppercase;letter-spacing:.12em;font-size:12px;opacity:.75}
+.hero h1{margin:6px 0 8px;font-size:30px;line-height:1.2}
+.hero .when{font-size:16px;opacity:.95}
+.hero .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);padding:4px 11px;border-radius:999px;font-size:13px}
+.chip.no{background:rgba(255,120,110,.18);border-color:rgba(255,150,140,.4)}
+.sources{font-size:13px;color:var(--muted);margin:-10px 0 26px}
+.sources code{font-size:12px}
+
+/* ---------- parts ---------- */
+section.part{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:6px 34px 26px;margin-bottom:30px;border-top:6px solid var(--accent)}
+.part-head{display:flex;align-items:center;gap:14px;margin:22px 0 6px}
+.part-letter{flex:none;width:46px;height:46px;border-radius:12px;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:800;font-size:22px}
+.part-head h2{margin:0;font-size:24px}
+.part-head .tag{font-size:13px;color:var(--muted)}
+.lead{font-size:16.5px;background:var(--accent-soft);border-radius:10px;padding:12px 16px;margin:14px 0 6px}
+h3{font-size:19px;margin:30px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--accent-soft);color:var(--ink)}
+h3 .num{color:var(--accent);margin-right:6px}
+h3 .ref{font-weight:400;font-size:13px;color:var(--muted);margin-left:6px}
+h4{font-size:16.5px;margin:22px 0 8px;color:var(--accent)}
+p{margin:8px 0}
+ul,ol{padding-left:22px;margin:8px 0}
+li{margin:3px 0}
+strong{color:#000}
+.pA{--accent:var(--a);--accent-soft:var(--a-soft)}
+.pB{--accent:var(--b);--accent-soft:var(--b-soft)}
+.pC{--accent:var(--c);--accent-soft:var(--c-soft)}
+.pD{--accent:var(--d);--accent-soft:var(--d-soft)}
+.pE{--accent:var(--e);--accent-soft:var(--e-soft)}
+.pF{--accent:var(--f);--accent-soft:var(--f-soft)}
+
+/* ---------- inline code ---------- */
+:not(pre)>code{background:#f0eee8;border:1px solid #e3e0d7;border-radius:5px;padding:1px 5px;font-size:.88em;color:#7a2d6b;white-space:nowrap}
+kbd{background:#fff;border:1px solid #c9c6bd;border-bottom-width:2px;border-radius:5px;padding:1px 6px;font-size:.85em}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto;margin:12px 0}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th{background:var(--accent);color:#fff;text-align:left;padding:8px 12px;font-weight:600}
+th:first-child{border-top-left-radius:8px} th:last-child{border-top-right-radius:8px}
+td{padding:7px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:#faf9f6}
+td.es{font-style:italic;color:#333}
+td.center{text-align:center;font-weight:700;color:var(--accent)}
+
+/* ---------- callouts ---------- */
+.box{border-radius:12px;padding:14px 18px 14px 18px;margin:16px 0;border:1px solid;position:relative}
+.box .bt{font-weight:800;font-size:12.5px;text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px;display:flex;align-items:center;gap:7px}
+.box p:first-of-type{margin-top:2px}
+.key{background:#fff8e1;border-color:#f0d27a}       .key .bt{color:#9a6b00}
+.theo{background:#eaf1ff;border-color:#a9c3f5}      .theo .bt{color:#1f4fa8}
+.trap{background:#fdeceb;border-color:#f2b3ad}      .trap .bt{color:#b3261e}
+.tip{background:#e7f6ef;border-color:#a6dcc5}       .tip .bt{color:#0b7a5c}
+.write{background:#f6f3ff;border-color:#cdbdf3;border-left:5px solid #7b4fd6} .write .bt{color:#5a35b0}
+.theo.big{border-width:2px;box-shadow:0 4px 18px rgba(47,111,219,.12)}
+.theo.big .t-title{font-size:18px;font-weight:800;color:#1f4fa8;margin-bottom:6px}
+
+/* ---------- numbered lists as cards ---------- */
+ol.rules{list-style:none;padding:0;counter-reset:r}
+ol.rules li{counter-increment:r;position:relative;padding:8px 12px 8px 46px;margin:6px 0;background:#faf9f6;border:1px solid var(--line);border-radius:10px}
+ol.rules li::before{content:counter(r);position:absolute;left:10px;top:8px;width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:13px;display:grid;place-items:center}
+ol.rules.bad li::before{background:var(--d)}
+
+.formula-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin:10px 0;padding:0;list-style:none}
+.formula-list li{background:#faf9f6;border:1px solid var(--line);border-radius:8px;padding:7px 12px;font-size:15px}
+.formula-list li.hl{background:#fff8e1;border-color:#f0d27a;font-weight:600}
+
+/* ---------- classification tree ---------- */
+.tree{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:16px 0;font-size:14.5px}
+.node{border-radius:10px;padding:9px 14px;font-weight:700;text-align:center;border:2px solid}
+.node small{display:block;font-weight:400;font-size:12.5px;opacity:.85}
+.n-root{background:#eef0f4;border-color:#9aa3b5}
+.n-si{background:#fdeceb;border-color:#e0786f;color:#9b211a}
+.n-sc{background:#e8f0fd;border-color:#7ea4ea;color:#1f4fa8}
+.n-scd{background:#e4f6f0;border-color:#5fc0a0;color:#0b6e52}
+.n-sci{background:#fbf2e1;border-color:#e2b260;color:#8a5a00}
+.branch{display:flex;flex-direction:column;gap:10px}
+.arrow{font-size:20px;color:#9aa3b5}
+
+/* ---------- decision flow (Rouché) ---------- */
+.flow{display:grid;gap:10px;margin:14px 0}
+.flow .step{display:grid;grid-template-columns:1fr auto 170px;align-items:center;gap:12px;background:#faf9f6;border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+.flow .cond{font-weight:600}
+.flow .res{border-radius:8px;padding:6px 10px;text-align:center;font-weight:800}
+
+/* ---------- code ---------- */
+pre{background:var(--code-bg);color:var(--code-ink);border-radius:12px;padding:16px 18px;overflow-x:auto;font-size:13.5px;line-height:1.55;margin:12px 0;position:relative}
+pre .cm{color:#8b93a7;font-style:italic}
+pre .fn{color:#7fc8ff}
+pre .st{color:#ffd479;font-weight:700}
+pre .kw{color:#ff9e8a}
+pre[data-label]::before{content:attr(data-label);position:absolute;top:0;right:14px;background:var(--accent);color:#fff;font:600 11px/1 "Segoe UI",sans-serif;padding:4px 8px;border-radius:0 0 6px 6px;letter-spacing:.05em}
+
+/* ---------- steps (Type 3) ---------- */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin:14px 0}
+.steps div{background:var(--c-soft);border:1px solid #a6dcc5;border-radius:10px;padding:10px 12px;font-size:14px}
+.steps b{display:block;color:var(--c);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+
+.type-badge{display:inline-block;background:var(--c);color:#fff;font-size:12px;font-weight:700;border-radius:6px;padding:2px 8px;margin-right:8px;vertical-align:2px}
+.prob{display:inline-block;background:#fff3cd;color:#8a6100;border:1px solid #f0d27a;font-size:12px;font-weight:700;border-radius:6px;padding:1px 8px;margin-left:6px;vertical-align:2px}
+
+/* ---------- self-test ---------- */
+.quiz{display:grid;gap:10px;margin-top:14px}
+.quiz details{background:#faf9f6;border:1px solid var(--line);border-radius:12px;padding:0}
+.quiz summary{cursor:pointer;list-style:none;padding:12px 16px 12px 52px;position:relative;font-weight:600}
+.quiz summary::-webkit-details-marker{display:none}
+.quiz summary .q{position:absolute;left:12px;top:10px;width:28px;height:28px;border-radius:8px;background:var(--f);color:#fff;display:grid;place-items:center;font-size:13px}
+.quiz summary::after{content:"Voir la réponse ▾";float:right;font-weight:500;font-size:12.5px;color:var(--f);margin-left:12px}
+.quiz details[open] summary::after{content:"Masquer ▴"}
+.quiz .ans{padding:0 16px 14px 52px;color:#16424f;border-top:1px dashed var(--line);padding-top:10px}
+.quiz-tools{display:flex;gap:8px;margin-top:10px}
+.quiz-tools button{font:inherit;font-size:13px;border:1px solid var(--f);background:#fff;color:var(--f);padding:5px 12px;border-radius:8px;cursor:pointer}
+.quiz-tools button:hover{background:var(--f-soft)}
+
+.checklist{list-style:none;padding:0;columns:2;column-gap:20px}
+.checklist li{break-inside:avoid;padding:4px 0 4px 26px;position:relative}
+.checklist li::before{content:"☐";position:absolute;left:2px;color:var(--c);font-size:16px;top:2px}
+
+hr.soft{border:none;border-top:1px dashed var(--line);margin:22px 0}
+footer{color:var(--muted);font-size:13px;text-align:center;margin-top:20px}
+
+/* ---------- responsive ---------- */
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr}
+  nav.toc{display:none}
+  main{padding:16px}
+  section.part{padding:4px 16px 18px}
+  .flow .step{grid-template-columns:1fr;text-align:left}
+  .checklist{columns:1}
+}
+
+/* ---------- print / PDF ---------- */
+@page{size:A4;margin:14mm 13mm}
+@media print{
+  body{background:#fff;font-size:11pt}
+  html,body{height:auto!important;overflow:visible!important}
+  .layout{display:block!important;max-width:none}
+  nav.toc,.quiz-tools,.noprint{display:none!important}
+  main{padding:0;display:block}
+  .hero{border-radius:10px;padding:22px 26px}
+  section.part{border:none;border-top:5px solid var(--accent);border-radius:0;padding:0 2px 6px;margin-bottom:0;page-break-before:always}
+  section.part.first{page-break-before:auto}
+  h3,h4{break-after:avoid}
+  .box,pre,tr,.flow .step,ol.rules li,.quiz details,.tree{break-inside:avoid}
+  .quiz summary::after,.quiz details[open] summary::after{content:""!important}
+  .quiz details .ans{display:block}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<nav class="toc">
+  <div class="brand">Examen EC 1 — Álgebra</div>
+  <div class="date">Ven. 23 oct · 12h00 · Línea 2</div>
+  <a class="part" style="--p:var(--a)" href="#A">A · Les maths</a>
+  <a class="sub" href="#A1">A1 Vocabulaire</a>
+  <a class="sub" href="#A2">A2 Opérations</a>
+  <a class="sub" href="#A3">A3 Déterminants</a>
+  <a class="sub" href="#A4">A4 Rang</a>
+  <a class="sub" href="#A5">A5 Inverse</a>
+  <a class="sub" href="#A6">A6 Systèmes</a>
+  <a class="sub" href="#rouche">↳ Rouché-Fröbenius</a>
+  <a class="sub" href="#gauss">↳ Gauss</a>
+  <a class="part" style="--p:var(--b)" href="#B">B · Wolfram</a>
+  <a class="sub" href="#B1">B1 Les 6 pièges</a>
+  <a class="sub" href="#B2">B2 Transcription</a>
+  <a class="sub" href="#solve-out">↳ Lire Solve</a>
+  <a class="part" style="--p:var(--c)" href="#C">C · Méthodes</a>
+  <a class="sub" href="#T1">Type 1 Calculs</a>
+  <a class="sub" href="#T2">Type 2 Sans paramètre</a>
+  <a class="sub" href="#T3">Type 3 Avec paramètre</a>
+  <a class="part" style="--p:var(--d)" href="#D">D · 10 erreurs</a>
+  <a class="part" style="--p:var(--e)" href="#E">E · Glosario</a>
+  <a class="part" style="--p:var(--f)" href="#F">F · Auto-test</a>
+</nav>
+
+<main>
+
+<header class="hero">
+  <div class="kicker">Evaluación Continua 1 · Bloque 1</div>
+  <h1>Álgebra — Fiche de révision</h1>
+  <div class="when">📅 Vendredi 23 octobre · 12h00 · Línea 2 · Wolfram Mathematica</div>
+  <div class="chips">
+    <span class="chip">✔ Tema 1 — Matrices y determinantes</span>
+    <span class="chip">✔ Tema 2 — Ecuaciones y sistemas lineales</span>
+    <span class="chip">✔ Práctica Informática 1 + 2</span>
+    <span class="chip no">✘ Práctica 3 (fonctions, limites) — hors programme</span>
+  </div>
+</header>
+<p class="sources">Sources (documents officiels du cours) : <code>GuiaDocente_L1.pdf</code> (§5 Temario) · <code>EB/Tema 1 (2).pdf</code> · <code>EB/Tema 2.pdf</code> · <code>Practica informatica1_CCAA.pdf</code> · <code>Practica informatica2_CCAA .pdf</code></p>
+
+<!-- ===================================================== A -->
+<section class="part pA first" id="A">
+  <div class="part-head"><div class="part-letter">A</div><div><h2>Les maths à maîtriser</h2><div class="tag">Tema 1 + Tema 2</div></div></div>
+  <p class="lead">Wolfram donne les nombres. <strong>Toi, tu dois savoir quoi demander et comment interpréter.</strong> C'est là que se joue la note.</p>
+
+  <h3 id="A1"><span class="num">A1</span>Matrices — vocabulaire et définitions <span class="ref">Tema 1, §1</span></h3>
+  <div class="tw"><table>
+    <tr><th>Terme (ES)</th><th>Français</th><th>Définition</th></tr>
+    <tr><td class="es">matriz de orden m × n</td><td>matrice d'ordre m × n</td><td>m <strong>filas</strong> (lignes), n <strong>columnas</strong> (colonnes)</td></tr>
+    <tr><td class="es">matriz cuadrada</td><td>matrice carrée</td><td>m = n</td></tr>
+    <tr><td class="es">diagonal principal</td><td>diagonale principale</td><td>les éléments aᵢᵢ</td></tr>
+    <tr><td class="es">triangular superior</td><td>triangulaire supérieure</td><td>tout ce qui est <strong>sous</strong> la diagonale est nul</td></tr>
+    <tr><td class="es">triangular inferior</td><td>triangulaire inférieure</td><td>tout ce qui est <strong>au-dessus</strong> est nul</td></tr>
+    <tr><td class="es">matriz diagonal</td><td>matrice diagonale</td><td>triangulaire supérieure <strong>et</strong> inférieure</td></tr>
+    <tr><td class="es">matriz identidad Iₙ</td><td>matrice identité</td><td>diagonale remplie de 1</td></tr>
+    <tr><td class="es">matriz traspuesta Aᵗ</td><td>transposée</td><td>les lignes deviennent les colonnes</td></tr>
+    <tr><td class="es">matriz simétrica</td><td>symétrique</td><td>Aᵗ = A</td></tr>
+    <tr><td class="es">matriz antisimétrica</td><td>antisymétrique</td><td>Aᵗ = −A</td></tr>
+    <tr><td class="es">matriz regular / invertible</td><td>inversible</td><td>det(A) ≠ 0</td></tr>
+    <tr><td class="es">submatriz</td><td>sous-matrice</td><td>on supprime des lignes et/ou colonnes</td></tr>
+  </table></div>
+
+  <h3 id="A2"><span class="num">A2</span>Opérations — les propriétés pièges <span class="ref">Tema 1, Teorema 11</span></h3>
+  <div class="box key"><div class="bt">⭐ À retenir absolument</div>Le cours insiste dessus (<code>Tema 1</code>, p. 2).</div>
+  <ol class="rules">
+    <li><strong>A·B ≠ B·A en général.</strong> Le produit matriciel n'est <strong>pas commutatif</strong>.</li>
+    <li><strong>A·B = Θ n'implique pas A = Θ ou B = Θ.</strong> Donc A·B = A·C <strong>n'implique pas</strong> B = C (pas de simplification).</li>
+    <li>A·(B+C) = A·B + A·C — distributivité : vraie.</li>
+    <li>(A·B)·C = A·(B·C) — associativité : vraie.</li>
+    <li>A·Iₙ = Iₘ·A = A.</li>
+  </ol>
+  <div class="box trap"><div class="bt">⚠ Conséquence directe — exercice 5 de l'EPD Tema 1</div>
+    (A+B)² ≠ A² + 2AB + B² en général, car <strong>(A+B)² = A² + AB + BA + B²</strong> et AB ≠ BA.<br>
+    Idem : (A+B)(A−B) ≠ A² − B².</div>
+
+  <h4>Transposée (Teorema 15)</h4>
+  <ul class="formula-list">
+    <li>(Aᵗ)ᵗ = A</li>
+    <li>(A+B)ᵗ = Aᵗ + Bᵗ</li>
+    <li>(λA)ᵗ = λAᵗ</li>
+    <li class="hl">(A·B)ᵗ = Bᵗ·Aᵗ &nbsp;← l'ordre s'inverse</li>
+  </ul>
+
+  <div class="box tip"><div class="bt">📐 Dimensions</div>
+    <strong>A(m×n) · B(n×l) → (m×l).</strong> Colonnes de A = lignes de B, sinon l'opération est impossible.<br>
+    En examen, <em>« calcular cuando sea posible »</em> signifie qu'il y a des pièges de dimension dans le lot.</div>
+
+  <h3 id="A3"><span class="num">A3</span>Determinantes <span class="ref">Tema 1, §4</span></h3>
+  <h4>Définition par récurrence (Definición 16)</h4>
+  <ul>
+    <li>n = 1 : det A = a₁₁</li>
+    <li>n = 2 : <strong>a₁₁a₂₂ − a₁₂a₂₁</strong></li>
+    <li>n = 3 : <strong>regla de Sarrus</strong>, ou développement par une ligne/colonne.</li>
+  </ul>
+  <div class="box theo"><div class="bt">📘 Adjunto (cofacteur)</div>
+    <strong>Aᵢⱼ = (−1)<sup>i+j</sup> · det A(i|j)</strong>, où A(i|j) = matrice sans la ligne i ni la colonne j.<br>
+    Signes en damier :&nbsp; <code>+ − +</code> / <code>− + −</code> / <code>+ − +</code></div>
+  <div class="box tip"><div class="bt">💡 Teorema 18 — Desarrollo por una fila o columna</div>
+    On peut développer selon <strong>n'importe quelle</strong> ligne ou colonne → choisis celle qui contient <strong>le plus de zéros</strong>.</div>
+
+  <h4>Propiedades (Teorema 19) — les 5 à connaître</h4>
+  <div class="tw"><table>
+    <tr><th>#</th><th>Propriété</th><th>Usage</th></tr>
+    <tr><td class="center">1</td><td>det(A) = det(Aᵗ)</td><td>tout ce qui vaut pour les lignes vaut pour les colonnes</td></tr>
+    <tr><td class="center">3</td><td>Permuter deux lignes → <strong>le déterminant change de signe</strong></td><td></td></tr>
+    <tr><td class="center">4</td><td>Ajouter à une ligne une combinaison linéaire des autres → <strong>det inchangé</strong></td><td>c'est ce qui permet de « faire des zéros »</td></tr>
+    <tr><td class="center">5</td><td>Une ligne est combinaison linéaire des autres → <strong>det = 0</strong></td><td>critère de dépendance</td></tr>
+    <tr><td class="center">7</td><td>det(A·B) = det(A)·det(B) &nbsp;et&nbsp; det(A⁻¹) = 1/det(A)</td><td></td></tr>
+  </table></div>
+
+  <h3 id="A4"><span class="num">A4</span>Rango <span class="ref">Tema 1, §5</span></h3>
+  <p>Deux définitions équivalentes — connais les deux :</p>
+  <ul>
+    <li><strong>Par les mineurs</strong> : le plus grand ordre d'un mineur non nul (<em>el mayor orden de sus menores no nulos</em>).</li>
+    <li><strong>Par Gauss</strong> : le nombre de lignes avec pivot après réduction (<code>Tema 2</code>, p. 6).</li>
+  </ul>
+  <div class="box key"><div class="bt">⭐ Notion centrale</div>Tout Rouché-Fröbenius repose sur le rang.</div>
+
+  <h3 id="A5"><span class="num">A5</span>Matriz inversa <span class="ref">Tema 1, §6</span></h3>
+  <div class="box theo big"><div class="t-title">Teorema 27 — le théorème clé</div>
+    A est inversible <strong>si et seulement si det(A) ≠ 0</strong>. Dans ce cas :
+    <p style="text-align:center;font-size:20px;margin:10px 0 2px"><strong>A⁻¹ = (1 / det A) · adj(A)ᵗ</strong></p></div>
+  <h4>Propriétés (Teorema 24)</h4>
+  <ul class="formula-list">
+    <li>(A⁻¹)⁻¹ = A</li>
+    <li class="hl">(A·B)⁻¹ = B⁻¹·A⁻¹ &nbsp;← l'ordre s'inverse</li>
+    <li>(Aᵗ)⁻¹ = (A⁻¹)ᵗ</li>
+  </ul>
+
+  <h3 id="A6"><span class="num">A6</span>Sistemas de ecuaciones lineales <span class="ref">Tema 2</span></h3>
+  <h4>Les deux matrices à distinguer — la base de tout</h4>
+  <div class="tw"><table>
+    <tr><th>Nom (ES)</th><th>Français</th><th>Contenu</th></tr>
+    <tr><td class="es">matriz de coeficientes <strong>A</strong></td><td>matrice des coefficients</td><td>juste les aᵢⱼ</td></tr>
+    <tr><td class="es">matriz ampliada <strong>(A|b)</strong></td><td>matrice augmentée</td><td>les coefficients <strong>+ la colonne des termes indépendants</strong></td></tr>
+  </table></div>
+  <p><em>Términos independientes</em> = seconds membres (les bᵢ). &nbsp;<em>Incógnitas</em> = inconnues.</p>
+
+  <h4>Clasificación — sigles exigés dans les réponses</h4>
+  <div class="tree">
+    <div class="node n-root">Sistema</div>
+    <div class="arrow">→</div>
+    <div class="branch">
+      <div class="node n-si">Incompatible (S.I.)<small>pas de solution</small></div>
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+        <div class="node n-sc">Compatible (S.C.)</div>
+        <div class="arrow">→</div>
+        <div class="branch">
+          <div class="node n-scd">Determinado (S.C.D.)<small>solution unique</small></div>
+          <div class="node n-sci">Indeterminado (S.C.I.)<small>infinité de solutions</small></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="box tip"><div class="bt">💡 Ça rapporte des points</div>
+    Un <strong>sistema homogéneo</strong> (tous les bᵢ = 0) est <strong>toujours compatible</strong> : il admet au minimum la <em>solución trivial</em> (0, 0, …, 0). Il ne peut donc <strong>jamais être S.I.</strong></div>
+
+  <h4 id="rouche">Teorema de Rouché-Fröbenius (Tema 2, Teorema 7) — LE théorème de l'examen</h4>
+  <div class="box theo big"><div class="t-title">Rouché-Fröbenius</div>
+    Le système A·x = b admet une solution <strong>si et seulement si rg(A) = rg(A|b)</strong>. Dans ce cas :
+    <ul>
+      <li>si <strong>rg(A) = n</strong> (nombre d'inconnues) → <strong>S.C.D.</strong> (solution unique)</li>
+      <li>si <strong>rg(A) &lt; n</strong> → <strong>S.C.I.</strong>, avec <strong>n − rg(A) grados de libertad</strong></li>
+    </ul></div>
+  <p><strong>Schéma de décision à appliquer mécaniquement :</strong></p>
+  <div class="flow">
+    <div class="step"><span class="cond">rg(A) ≠ rg(A|b)</span><span class="arrow">→</span><span class="res n-si node">S.I.</span></div>
+    <div class="step"><span class="cond">rg(A) = rg(A|b) = n</span><span class="arrow">→</span><span class="res n-scd node">S.C.D.</span></div>
+    <div class="step"><span class="cond">rg(A) = rg(A|b) &lt; n &nbsp;<span style="font-weight:400;color:var(--muted)">(n − rg(A) degrés de liberté)</span></span><span class="arrow">→</span><span class="res n-sci node">S.C.I.</span></div>
+  </div>
+
+  <h4 id="gauss">Método de Gauss (Tema 2, §3)</h4>
+  <p><strong>Transformaciones elementales</strong> — elles conservent les solutions (<em>sistemas equivalentes</em>) :</p>
+  <div class="tw"><table>
+    <tr><th>Notation</th><th>Opération</th></tr>
+    <tr><td><code>Fᵢⱼ</code></td><td>échanger les lignes i et j</td></tr>
+    <tr><td><code>Fᵢ(α)</code></td><td>multiplier la ligne i par α ≠ 0</td></tr>
+    <tr><td><code>Fᵢⱼ(α)</code></td><td>ajouter à la ligne i la ligne j multipliée par α</td></tr>
+  </table></div>
+  <p><strong>Sistema escalonado</strong> : sous la diagonale tout est nul, chaque pivot est à droite du pivot de la ligne précédente, les lignes nulles sont en bas. Puis <strong>sustitución regresiva</strong> (remontée) : on résout de la dernière équation vers la première.</p>
+  <div class="box key"><div class="bt">🔎 Lecture du système échelonné</div>
+    <ul style="margin:4px 0">
+      <li>une ligne <code>0 0 0 | b</code> avec b ≠ 0 → <strong>S.I.</strong></li>
+      <li>nombre de pivots = nombre d'inconnues → <strong>S.C.D.</strong></li>
+      <li>nombre de pivots &lt; nombre d'inconnues → <strong>S.C.I.</strong> ; les inconnues sans pivot sont les <em>incógnitas libres</em>, on leur donne un paramètre (λ, t…)</li>
+    </ul>
+    <em>Incógnitas básicas</em> = colonnes avec pivot · <em>Incógnitas libres</em> = colonnes sans pivot.</div>
+</section>
+
+<!-- ===================================================== B -->
+<section class="part pB" id="B">
+  <div class="part-head"><div class="part-letter">B</div><div><h2>Transcription dans Wolfram</h2><div class="tag">Práctica 1 + Práctica 2</div></div></div>
+
+  <h3 id="B1"><span class="num">B1</span>Les 6 pièges de syntaxe qui font perdre des points</h3>
+  <div class="tw"><table>
+    <tr><th style="width:24%">Piège</th><th>Règle</th></tr>
+    <tr><td><strong>Majuscule</strong></td><td>Toutes les fonctions commencent par une majuscule : <code>Det</code>, <code>Inverse</code>, <code>Solve</code>. <code>det[a]</code> ne marche pas.</td></tr>
+    <tr><td><strong>Crochets</strong></td><td><code>[ ]</code> pour les fonctions, <code>{ }</code> pour les listes/vecteurs/matrices, <code>( )</code> pour grouper. Jamais interchangeables (<code>Práctica 1</code>, p. 1).</td></tr>
+    <tr><td><strong>Produit matriciel</strong></td><td><code>a.b</code> avec un <strong>point</strong>. <code>a*b</code> ou <code>a b</code> fait le produit <strong>terme à terme</strong> → faux. (<code>Práctica 1</code>, p. 2)</td></tr>
+    <tr><td><strong><code>=</code> vs <code>==</code> vs <code>:=</code></strong></td><td><code>=</code> assigne · <code>==</code> égalité d'une équation (dans <code>Solve</code>) · <code>:=</code> définit une fonction. Un seul <code>=</code> dans <code>Solve</code> = erreur.</td></tr>
+    <tr><td><strong>Minuscules pour les variables</strong></td><td><code>a</code>, <code>b</code>, <code>x</code>, <code>m</code>. Évite <code>C</code>, <code>D</code>, <code>E</code>, <code>I</code>, <code>N</code>, <code>K</code> : symboles réservés.</td></tr>
+    <tr><td><strong><code>MatrixForm</code> = affichage</strong></td><td><code>c = MatrixForm[a]</code> rend <code>c</code> <strong>inutilisable</strong> pour les calculs. Calculer avec <code>a</code>, afficher avec <code>MatrixForm[a]</code>.</td></tr>
+  </table></div>
+  <p>Exécuter : <kbd>Shift</kbd> + <kbd>Entrée</kbd> · Dernier résultat : <code>%</code> · Avant-dernier : <code>%%</code></p>
+
+  <h3 id="B2"><span class="num">B2</span>Table de transcription complète</h3>
+  <h4>Base et algèbre (Práctica 1)</h4>
+  <div class="tw"><table>
+    <tr><th>Maths</th><th>Wolfram</th><th>Note</th></tr>
+    <tr><td>3 + 5, 3 − 5</td><td><code>3+5</code>, <code>3-5</code></td><td></td></tr>
+    <tr><td>3 × 5</td><td><code>3*5</code> ou <code>3 5</code> (espace)</td><td></td></tr>
+    <tr><td>3 ÷ 5</td><td><code>3/5</code> → reste fractionnaire</td><td><code>3/5.</code> pour le décimal</td></tr>
+    <tr><td>xⁿ</td><td><code>x^n</code></td><td></td></tr>
+    <tr><td>√8</td><td><code>Sqrt[8]</code></td><td>simplifie ; <code>Sqrt[8.]</code> pour le décimal</td></tr>
+    <tr><td>valeur à 10 chiffres</td><td><code>N[Sqrt[2],10]</code></td><td></td></tr>
+    <tr><td>π, e, i</td><td><code>Pi</code>, <code>E</code>, <code>I</code></td><td>majuscules</td></tr>
+    <tr><td>développer</td><td><code>Expand[...]</code></td><td></td></tr>
+    <tr><td>factoriser</td><td><code>Factor[x^2-4x+4]</code></td><td></td></tr>
+    <tr><td>effacer une variable</td><td><code>ClearAll[x]</code></td><td></td></tr>
+  </table></div>
+
+  <h4>Vecteurs et matrices (Práctica 1, p. 5–9)</h4>
+  <div class="tw"><table>
+    <tr><th>Maths</th><th>Wolfram</th></tr>
+    <tr><td>vecteur v₁ = (−1, 2, 0)</td><td><code>v1 = {-1, 2, 0}</code></td></tr>
+    <tr><td>somme, différence, produit par un scalaire</td><td><code>v1 + v2</code>, <code>v1 - v2</code>, <code>-3 v2</code></td></tr>
+    <tr><td>matrice A (lignes entre accolades)</td><td><code>a = {{1,-3,4},{2,0,2},{4,-3,-1}}</code></td></tr>
+    <tr><td>affichage matriciel</td><td><code>MatrixForm[a]</code></td></tr>
+    <tr><td>A + B, A − B</td><td><code>MatrixForm[a + b]</code>, <code>MatrixForm[a - b]</code></td></tr>
+    <tr><td><strong>produit A·B</strong></td><td><code>MatrixForm[a.b]</code> ← <strong>le point</strong></td></tr>
+    <tr><td>rango de A</td><td><code>MatrixRank[a]</code></td></tr>
+    <tr><td>matriz identidad Iₙ</td><td><code>IdentityMatrix[3]</code></td></tr>
+    <tr><td>matriz diagonal</td><td><code>DiagonalMatrix[{1,3,-4,5}]</code></td></tr>
+    <tr><td>traspuesta Aᵗ</td><td><code>Transpose[a]</code></td></tr>
+    <tr><td>forma reducida por filas</td><td><code>RowReduce[a]</code></td></tr>
+    <tr><td>inversa A⁻¹</td><td><code>Inverse[a]</code></td></tr>
+    <tr><td>determinante det(A)</td><td><code>Det[a]</code></td></tr>
+  </table></div>
+
+  <h4>Équations et systèmes (Práctica 2)</h4>
+  <div class="tw"><table>
+    <tr><th>Maths</th><th>Wolfram</th></tr>
+    <tr><td>résoudre x² − 3x − 4 = 0</td><td><code>Solve[x^2 - 3x - 4 == 0]</code></td></tr>
+    <tr><td>résoudre 3x + y = 1 <strong>par rapport à x</strong></td><td><code>Solve[3x + y == 1, x]</code></td></tr>
+    <tr><td>résoudre un système</td><td><code>Solve[{x - 2y + 3z == 1, y + 2z == -3, x - 3y + z == 4}]</code></td></tr>
+    <tr><td>résoudre en fixant les inconnues principales</td><td><code>Solve[{...}, {x, y}]</code></td></tr>
+    <tr><td>valeurs du paramètre annulant le déterminant</td><td><code>Solve[Det[a] == 0]</code></td></tr>
+  </table></div>
+
+  <h4 id="solve-out">Lecture des sorties de <code>Solve</code> — c'est ça qu'on te demande d'interpréter</h4>
+  <div class="flow">
+    <div class="step"><span class="cond"><code>{{x -> 1, y -> 2, z -> 0}}</code> &nbsp;<span style="font-weight:400;color:var(--muted)">tout est numérique</span></span><span class="arrow">→</span><span class="res n-scd node">S.C.D.</span></div>
+    <div class="step"><span class="cond"><code>{{x -> -5 - 7z, y -> -3 - 2z}}</code> &nbsp;<span style="font-weight:400;color:var(--muted)">dépend d'une variable libre (z)</span></span><span class="arrow">→</span><span class="res n-sci node">S.C.I.</span></div>
+    <div class="step"><span class="cond"><code>{}</code> &nbsp;<span style="font-weight:400;color:var(--muted)">aucune solution (<code>Práctica 2</code>, p. 2)</span></span><span class="arrow">→</span><span class="res n-si node">S.I.</span></div>
+  </div>
+</section>
+
+<!-- ===================================================== C -->
+<section class="part pC" id="C">
+  <div class="part-head"><div class="part-letter">C</div><div><h2>Les 3 types d'exercices — méthode pas à pas</h2><div class="tag">Ce que tu feras le jour J</div></div></div>
+
+  <h3 id="T1"><span class="type-badge">TYPE 1</span>Calculs matriciels <span class="ref">« calcular cuando sea posible »</span></h3>
+<pre data-label="MATHEMATICA"><span class="fn">ClearAll</span>[a, b, c]
+a = {{1, 1, 2, 1}, {0, 1, 1, 1}, {2, 0, 2, 2}};
+b = {{1, -3, 2}, {2, 0, 2}, {4, -3, -1}};
+
+<span class="fn">MatrixForm</span>[a]                <span class="cm">(* vérifier qu'on a bien saisi *)</span>
+<span class="fn">Dimensions</span>[a]                <span class="cm">(* {3, 4} : 3 lignes, 4 colonnes *)</span>
+<span class="fn">MatrixForm</span>[b<span class="st">.</span>b<span class="st">.</span>b]            <span class="cm">(* B^3 *)</span>
+<span class="fn">MatrixForm</span>[<span class="fn">Transpose</span>[a]<span class="st">.</span>b]   <span class="cm">(* A^t · B *)</span>
+<span class="fn">MatrixRank</span>[a]
+<span class="fn">Det</span>[b]
+<span class="fn">MatrixForm</span>[<span class="fn">Inverse</span>[b]]</pre>
+  <div class="box tip"><div class="bt">✅ Réflexe avant chaque produit</div>
+    Vérifier avec <code>Dimensions</code> que colonnes de la 1ʳᵉ = lignes de la 2ᵉ. Une erreur rouge <code>Dot::dotsh</code>, c'est exactement ça.
+    <strong>Si l'opération est impossible, écris-le et justifie par les dimensions</strong> — c'est une réponse attendue, pas un échec.</div>
+  <div class="box trap"><div class="bt">⚠ Avant <code>Inverse[a]</code>, calcule <code>Det[a]</code></div>
+    Si det = 0, la matrice n'est pas inversible : tu dois le dire au lieu de laisser Mathematica renvoyer une erreur.</div>
+
+  <h3 id="T2"><span class="type-badge">TYPE 2</span>Discuter et résoudre un système <u>sans</u> paramètre</h3>
+<pre data-label="MATHEMATICA"><span class="fn">ClearAll</span>[a, ab]
+<span class="cm">(* 1. matrice des coefficients *)</span>
+a = {{1, 1, 1}, {0, 3, -1}, {0, 0, 1}};
+<span class="cm">(* 2. matrice ampliada : on ajoute la colonne des termes indépendants *)</span>
+ab = {{1, 1, 1, 2}, {0, 3, -1, 3}, {0, 0, 1, 6}};
+
+<span class="fn">MatrixRank</span>[a]    <span class="cm">(* rg(A)    *)</span>
+<span class="fn">MatrixRank</span>[ab]   <span class="cm">(* rg(A|b)  *)</span>
+<span class="cm">(* 3. appliquer Rouché-Fröbenius à la main, puis : *)</span>
+<span class="fn">Solve</span>[{x + y + z <span class="st">==</span> 2, 3 y - z <span class="st">==</span> 3, z <span class="st">==</span> 6}, {x, y, z}]</pre>
+  <div class="box write"><div class="bt">✍ La rédaction attendue (le calcul seul ne suffit pas)</div>
+    rg(A) = 3, rg(A|b) = 3, n = 3 inconnues.<br>
+    Comme rg(A) = rg(A|b) = n, par le <strong>teorema de Rouché-Fröbenius</strong> le système est <strong>compatible determinado</strong>.<br>
+    Solution : x = …, y = …, z = …
+    <hr class="soft" style="margin:10px 0">
+    Si S.C.I., ajoute : <em>« con n − rg(A) = … grados de libertad, la solución viene expresada en función de … »</em></div>
+
+  <h3 id="T3"><span class="type-badge">TYPE 3</span>Discuter un système <u>avec</u> paramètre <span class="prob">LE PLUS PROBABLE</span></h3>
+  <p>Le modèle de la Práctica 2 — le PDF le détaille entièrement (<code>Práctica 2</code>, p. 2–3). Quatre étapes, toujours les mêmes :</p>
+  <div class="steps">
+    <div><b>Étape 1</b>Matrice des coefficients avec le paramètre</div>
+    <div><b>Étape 2</b>Valeurs critiques : <code>Solve[Det[a]==0]</code></div>
+    <div><b>Étape 3</b>Cas général (det ≠ 0) → S.C.D.</div>
+    <div><b>Étape 4</b>Chaque valeur critique, une par une → S.I. ou S.C.I.</div>
+  </div>
+<pre data-label="MATHEMATICA"><span class="fn">ClearAll</span>[a, m, x, y, z]
+
+<span class="cm">(* ÉTAPE 1 — matrice des coefficients avec le paramètre *)</span>
+a = {{1, 1, 2}, {-1, m, 2}, {3, 0, m}};
+
+<span class="cm">(* ÉTAPE 2 — valeurs critiques : celles qui annulent le déterminant *)</span>
+<span class="fn">Solve</span>[<span class="fn">Det</span>[a] <span class="st">==</span> 0]
+<span class="cm">(* → {{m -> 2}, {m -> 3}} *)</span>
+
+<span class="cm">(* ÉTAPE 3 — cas général : m ≠ 2 et m ≠ 3 *)</span>
+<span class="fn">ClearAll</span>[m]
+<span class="fn">Solve</span>[{x + y + 2 z <span class="st">==</span> 2, -x + m*y + 2 z <span class="st">==</span> 0, 3 x + m*z <span class="st">==</span> 4}, {x, y, z}]
+<span class="cm">(* det ≠ 0 → rg(A) = rg(A|b) = 3 = n → S.C.D., solution unique en fonction de m *)</span>
+
+<span class="cm">(* ÉTAPE 4 — chaque valeur critique, une par une *)</span>
+m = 2;
+<span class="fn">Solve</span>[{x + y + 2 z <span class="st">==</span> 2, -x + m*y + 2 z <span class="st">==</span> 0, 3 x + m*z <span class="st">==</span> 4}, {x, y}]
+<span class="cm">(* → solution en fonction de z : S.C.I. *)</span>
+
+<span class="fn">ClearAll</span>[m]
+m = 3;
+<span class="fn">Solve</span>[{x + y + 2 z <span class="st">==</span> 2, -x + m*y + 2 z <span class="st">==</span> 0, 3 x + m*z <span class="st">==</span> 4}, {x, y, z}]
+<span class="cm">(* → {} : S.I. *)</span>
+
+<span class="kw">ClearAll[m]   (* NE JAMAIS OUBLIER *)</span></pre>
+
+  <div class="box theo"><div class="bt">🧠 Le raisonnement mathématique derrière (c'est ce qui est noté)</div>
+    <ul style="margin:4px 0">
+      <li><strong>det(A) ≠ 0 ⟺ rg(A) = n ⟺ S.C.D.</strong> Donc seules les valeurs qui annulent le déterminant posent problème.</li>
+      <li>Pour chaque valeur critique, le rang chute : comparer rg(A) et rg(A|b) <strong>pour cette valeur</strong> afin de trancher entre S.I. et S.C.I.</li>
+    </ul></div>
+  <div class="box trap"><div class="bt">☠ Piège mortel — signalé explicitement par le PDF</div>
+    <code>m = 2</code> assigne la valeur <strong>globalement</strong>. Tant que tu n'as pas fait <code>ClearAll[m]</code>, tous les calculs suivants utilisent m = 2 — et tes résultats sont faux <strong>sans aucun message d'erreur</strong>.</div>
+  <div class="box tip"><div class="bt">💡 Complément (hors cours)</div>
+    La substitution temporaire <code>expr /. m -> 2</code> donne le même résultat sans assigner m, donc sans ce piège. Mais écris quand même <code>ClearAll[m]</code> dans ta copie : c'est la méthode du cours, et le prof la cherche.</div>
+</section>
+
+<!-- ===================================================== D -->
+<section class="part pD" id="D">
+  <div class="part-head"><div class="part-letter">D</div><div><h2>Les 10 erreurs qui coûtent des points</h2><div class="tag">À relire juste avant l'examen</div></div></div>
+  <ol class="rules bad">
+    <li><code>a*b</code> au lieu de <code>a.b</code> pour un produit matriciel.</li>
+    <li>Un seul <code>=</code> dans <code>Solve</code> au lieu de <code>==</code>.</li>
+    <li>Oublier <code>ClearAll[m]</code> entre deux valeurs du paramètre.</li>
+    <li>Calculer <code>Inverse[a]</code> sans avoir vérifié <code>Det[a] ≠ 0</code>.</li>
+    <li>Confondre matriz de coeficientes <strong>A</strong> et matriz ampliada <strong>(A|b)</strong> pour les rangs.</li>
+    <li>Donner le résultat Wolfram sans conclure en vocabulaire du cours (S.C.D. / S.C.I. / S.I.).</li>
+    <li>Oublier de préciser les <em>grados de libertad</em> dans un S.C.I.</li>
+    <li>Écrire <code>det[a]</code> ou <code>solve[...]</code> en minuscule.</li>
+    <li>Réutiliser une variable définie plus haut sans l'effacer (vaut pour <code>x</code>, <code>a</code>, <code>m</code>…).</li>
+    <li>Multiplier des matrices dont les dimensions ne concordent pas, au lieu de répondre « no es posible » avec justification.</li>
+  </ol>
+  <div class="box key"><div class="bt">🚀 Réflexe d'ouverture d'examen</div>
+    Commence le notebook par <code>ClearAll["Global`*"]</code> — ça efface toutes les variables d'un coup et tu pars propre.</div>
+</section>
+
+<!-- ===================================================== E -->
+<section class="part pE" id="E">
+  <div class="part-head"><div class="part-letter">E</div><div><h2>Glosario español → français</h2><div class="tag">Pour comprendre l'énoncé du premier coup</div></div></div>
+  <div class="tw"><table>
+    <tr><th>Espagnol</th><th>Français</th></tr>
+    <tr><td class="es">matriz de coeficientes</td><td>matrice des coefficients</td></tr>
+    <tr><td class="es">matriz ampliada</td><td>matrice augmentée</td></tr>
+    <tr><td class="es">términos independientes</td><td>seconds membres / termes constants</td></tr>
+    <tr><td class="es">incógnitas</td><td>inconnues</td></tr>
+    <tr><td class="es">incógnitas básicas / libres</td><td>inconnues principales / libres</td></tr>
+    <tr><td class="es">grados de libertad</td><td>degrés de liberté</td></tr>
+    <tr><td class="es">rango</td><td>rang</td></tr>
+    <tr><td class="es">menor de orden p</td><td>mineur d'ordre p</td></tr>
+    <tr><td class="es">orlar un menor</td><td>border un mineur (l'élargir d'une ligne et d'une colonne)</td></tr>
+    <tr><td class="es">adjunto / cofactor</td><td>cofacteur</td></tr>
+    <tr><td class="es">matriz adjunta</td><td>comatrice</td></tr>
+    <tr><td class="es">filas / columnas</td><td>lignes / colonnes</td></tr>
+    <tr><td class="es">forma reducida por filas</td><td>forme échelonnée réduite par lignes</td></tr>
+    <tr><td class="es">sistema escalonado</td><td>système échelonné</td></tr>
+    <tr><td class="es">sustitución regresiva</td><td>substitution ascendante (remontée)</td></tr>
+    <tr><td class="es">transformaciones elementales</td><td>opérations élémentaires</td></tr>
+    <tr><td class="es">sistemas equivalentes</td><td>systèmes équivalents</td></tr>
+    <tr><td class="es">sistema homogéneo</td><td>système homogène</td></tr>
+    <tr><td class="es">solución trivial</td><td>solution triviale</td></tr>
+    <tr><td class="es">compatible determinado / indeterminado</td><td>compatible déterminé / indéterminé</td></tr>
+    <tr><td class="es">incompatible</td><td>incompatible</td></tr>
+    <tr><td class="es">discutir el sistema</td><td>discuter le système (selon les valeurs du paramètre)</td></tr>
+    <tr><td class="es">anular el determinante</td><td>annuler le déterminant</td></tr>
+    <tr><td class="es">hallar / calcular</td><td>trouver / calculer</td></tr>
+    <tr><td class="es">cuando sea posible</td><td>lorsque c'est possible</td></tr>
+    <tr><td class="es">según los valores de m</td><td>selon les valeurs de m</td></tr>
+  </table></div>
+
+  <h3>Formulations d'énoncé à reconnaître immédiatement</h3>
+  <div class="tw"><table>
+    <tr><th>Énoncé espagnol</th><th>Ce qu'on attend de toi</th></tr>
+    <tr><td class="es">Calcular, cuando sea posible</td><td>Faire le calcul <strong>ou</strong> justifier l'impossibilité par les dimensions</td></tr>
+    <tr><td class="es">Discuta la tipología del sistema mediante el teorema de Rouché</td><td>Comparer rg(A) et rg(A|b), puis conclure S.I. / S.C.D. / S.C.I.</td></tr>
+    <tr><td class="es">Resuelva mediante el método de Gauss</td><td>Montrer <code>RowReduce</code> + lecture des pivots, pas seulement <code>Solve</code></td></tr>
+    <tr><td class="es">Estudiar el sistema según los valores del parámetro</td><td>La méthode du <a href="#T3">Type 3</a> en entier</td></tr>
+    <tr><td class="es">Determine los valores de h y k de manera que… no tenga solución</td><td>Trouver h, k donnant <strong>S.I.</strong></td></tr>
+    <tr><td class="es">Hallar la forma reducida por filas</td><td><code>RowReduce</code></td></tr>
+    <tr><td class="es">¿Qué relación deben guardar a y b para que A² = A?</td><td><code>Solve[a.a == a, {…}]</code> ou calcul à la main</td></tr>
+  </table></div>
+</section>
+
+<!-- ===================================================== F -->
+<section class="part pF" id="F">
+  <div class="part-head"><div class="part-letter">F</div><div><h2>Auto-test</h2><div class="tag">Réponds de tête avant d'ouvrir la réponse</div></div></div>
+  <div class="quiz-tools noprint">
+    <button onclick="document.querySelectorAll('.quiz details').forEach(d=>d.open=true)">Tout afficher</button>
+    <button onclick="document.querySelectorAll('.quiz details').forEach(d=>d.open=false)">Tout masquer</button>
+  </div>
+  <div class="quiz">
+    <details><summary><span class="q">1</span>rg(A) = 2, rg(A|b) = 3, 3 inconnues. Quel type de système ? Pourquoi ?</summary>
+      <div class="ans"><strong>S.I.</strong> — rg(A) ≠ rg(A|b), donc par Rouché-Fröbenius le système n'a pas de solution.</div></details>
+    <details><summary><span class="q">2</span>rg(A) = rg(A|b) = 2, 4 inconnues. Type de système et degrés de liberté ?</summary>
+      <div class="ans"><strong>S.C.I.</strong> avec n − rg(A) = 4 − 2 = <strong>2 grados de libertad</strong>.</div></details>
+    <details><summary><span class="q">3</span>Un système homogène peut-il être incompatible ? Justifie.</summary>
+      <div class="ans"><strong>Non.</strong> Il admet toujours la solución trivial (0, …, 0) ; ajouter une colonne de zéros ne change pas le rang, donc rg(A) = rg(A|b).</div></details>
+    <details><summary><span class="q">4</span>Commande Wolfram qui donne les valeurs de m annulant le déterminant de <code>a</code> ?</summary>
+      <div class="ans"><code>Solve[Det[a] == 0]</code> (ou <code>Solve[Det[a] == 0, m]</code>).</div></details>
+    <details><summary><span class="q">5</span>Quelle est la différence entre <code>a*b</code> et <code>a.b</code> ?</summary>
+      <div class="ans"><code>a*b</code> = produit <strong>terme à terme</strong> ; <code>a.b</code> = <strong>produit matriciel</strong> (le seul correct pour A·B).</div></details>
+    <details><summary><span class="q">6</span>(A·B)ᵗ = ? &nbsp;Et (A·B)⁻¹ = ?</summary>
+      <div class="ans">(A·B)ᵗ = <strong>Bᵗ·Aᵗ</strong> &nbsp;et&nbsp; (A·B)⁻¹ = <strong>B⁻¹·A⁻¹</strong> — l'ordre s'inverse dans les deux cas.</div></details>
+    <details><summary><span class="q">7</span>Que signifie une sortie <code>{}</code> de <code>Solve</code> ?</summary>
+      <div class="ans">Aucune solution → système <strong>incompatible (S.I.)</strong>.</div></details>
+    <details><summary><span class="q">8</span>Pourquoi écrire <code>ClearAll[m]</code> après avoir testé <code>m = 3</code> ?</summary>
+      <div class="ans">Parce que <code>m = 3</code> est une assignation <strong>globale</strong> : sans <code>ClearAll[m]</code>, tous les calculs suivants utilisent m = 3 et donnent des résultats faux sans message d'erreur.</div></details>
+    <details><summary><span class="q">9</span>Traduis : <em>matriz ampliada</em>, <em>grados de libertad</em>, <em>sustitución regresiva</em>.</summary>
+      <div class="ans">Matrice augmentée · degrés de liberté · substitution ascendante (remontée).</div></details>
+    <details><summary><span class="q">10</span>A est 3×4, B est 4×2. A·B est-il possible ? De quelle dimension ? Et B·A ?</summary>
+      <div class="ans">A·B : <strong>oui</strong> (4 = 4) → matrice <strong>3×2</strong>. &nbsp;B·A : (4×2)·(3×4) → 2 ≠ 3, <strong>impossible</strong> (« no es posible »).</div></details>
+  </div>
+
+  <h3>✅ Checklist jour J</h3>
+  <ul class="checklist">
+    <li><code>ClearAll["Global`*"]</code> en ouverture</li>
+    <li>Fonctions en Majuscule, variables en minuscule</li>
+    <li><code>a.b</code> pour le produit matriciel</li>
+    <li><code>==</code> dans <code>Solve</code></li>
+    <li><code>Dimensions</code> avant chaque produit</li>
+    <li><code>Det</code> avant <code>Inverse</code></li>
+    <li>rg(A) <em>et</em> rg(A|b), comparés à n</li>
+    <li>Conclure en S.I. / S.C.D. / S.C.I.</li>
+    <li>Grados de libertad si S.C.I.</li>
+    <li><code>ClearAll[m]</code> entre chaque valeur</li>
+  </ul>
+</section>
+
+<footer>Bonne chance vendredi ! · Fiche de révision — Evaluación Continua 1, Álgebra</footer>
+</main>
+</div>
+<script>
+  // Déplie les réponses de l'auto-test à l'impression / export PDF
+  const openAll = () => document.querySelectorAll('.quiz details').forEach(d => d.open = true);
+  window.addEventListener('beforeprint', openAll);
+  if (location.search.includes('print')) openAll();
+</script>
+</body>
+</html>
